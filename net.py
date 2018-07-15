@@ -21,9 +21,10 @@ class RNNLM_1layer(chainer.Chain):
 
 	def __call__(self, x):
 		h0 = self.embed(x)
-		h1 = self.l1(F.dropout(h0, ratio=self.ratio, train=self.train))
-		y = self.l2(F.dropout(h1, ratio=self.ratio, train=self.train))
-		return y
+		with chainer.using_config('train', self.train):
+			h1 = self.l1(F.dropout(h0, ratio=self.ratio))
+			y = self.l2(F.dropout(h1, ratio=self.ratio))
+			return y
 
 
 class RNNLM_2layer(chainer.Chain):
@@ -46,10 +47,11 @@ class RNNLM_2layer(chainer.Chain):
 
 	def __call__(self, x):
 		h0 = self.embed(x)
-		h1 = self.l1(F.dropout(h0, ratio=self.ratio, train=self.train))
-		h2 = self.l2(F.dropout(h1, ratio=self.ratio, train=self.train))
-		y = self.l3(F.dropout(h2, ratio=self.ratio, train=self.train))
-		return y
+		with chainer.using_config('train', self.train):
+			h1 = self.l1(F.dropout(h0, ratio=self.ratio))
+			h2 = self.l2(F.dropout(h1, ratio=self.ratio))
+			y = self.l3(F.dropout(h2, ratio=self.ratio))
+			return y
 
 
 class RNNLM_3layer(chainer.Chain):
@@ -74,11 +76,12 @@ class RNNLM_3layer(chainer.Chain):
 
 	def __call__(self, x):
 		h0 = self.embed(x)
-		h1 = self.l1(F.dropout(h0, ratio=self.ratio, train=self.train))
-		h2 = self.l2(F.dropout(h1, ratio=self.ratio, train=self.train))
-		h3 = self.l3(F.dropout(h2, ratio=self.ratio, train=self.train))
-		y = self.l4(F.dropout(h3, ratio=self.ratio, train=self.train))
-		return y
+		with chainer.using_config('train', self.train):
+			h1 = self.l1(F.dropout(h0, ratio=self.ratio))
+			h2 = self.l2(F.dropout(h1, ratio=self.ratio))
+			h3 = self.l3(F.dropout(h2, ratio=self.ratio))
+			y = self.l4(F.dropout(h3, ratio=self.ratio))
+			return y
 
 
 class RNNLM_FV_1layer(chainer.Chain):
@@ -97,9 +100,10 @@ class RNNLM_FV_1layer(chainer.Chain):
 		self.l1.reset_state()
 
 	def __call__(self, x):
-		h1 = self.l1(F.dropout(x, ratio=self.ratio, train=self.train))
-		y = self.l2(F.dropout(h1, ratio=self.ratio, train=self.train))
-		return y
+		with chainer.using_config('train', self.train):
+			h1 = self.l1(F.dropout(x, ratio=self.ratio))
+			y = self.l2(F.dropout(h1, ratio=self.ratio))
+			return y
 
 
 class RNNLM_FV_2layer(chainer.Chain):
@@ -120,10 +124,11 @@ class RNNLM_FV_2layer(chainer.Chain):
 		self.l2.reset_state()
 
 	def __call__(self, x):
-		h0 = self.l1(F.dropout(x, ratio=self.ratio, train=self.train))
-		h1 = self.l2(F.dropout(h0, ratio=self.ratio, train=self.train))
-		y = self.l3(F.dropout(h1, ratio=self.ratio, train=self.train))
-		return y
+		with chainer.using_config('train', self.train):
+			h0 = self.l1(F.dropout(x, ratio=self.ratio))
+			h1 = self.l2(F.dropout(h0, ratio=self.ratio))
+			y = self.l3(F.dropout(h1, ratio=self.ratio))
+			return y
 
 
 class SoftmaxCrossEntropyLoss(chainer.Chain):
@@ -160,10 +165,11 @@ class HSMmodel(chainer.Chain):
 
 	def predictor(self, x):
 		h0 = self.embed(x)
-		h1 = self.l1(F.dropout(h0, ratio=self.ratio, train=self.train))
-		h2 = self.l2(F.dropout(h1, ratio=self.ratio, train=self.train))
-		y = self.l3(F.dropout(h2, ratio=self.ratio, train=self.train))
-		return y
+		with chainer.using_config('train', self.train):
+			h1 = self.l1(F.dropout(h0, ratio=self.ratio))
+			h2 = self.l2(F.dropout(h1, ratio=self.ratio))
+			y = self.l3(F.dropout(h2, ratio=self.ratio))
+			return y
 
 	def __call__(self, x, t):
 		self.y = self.predictor(x)
