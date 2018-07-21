@@ -272,7 +272,7 @@ class LSTMLM:
 					self.vocab[word] = len(self.vocab)
 				else:
 					word = UNK
-			dataset[i] = self.vocab[word]
+			dataset[i] = self.vocab[word] if word in self.vocab else 0
 		if update_vocab:
 			tree = {}
 			for word in words:
