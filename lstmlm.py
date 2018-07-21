@@ -321,8 +321,9 @@ class LSTMLM:
         self.ivocab = {v: k for k, v in self.vocab.items()}
         
         for i in six.moves.range(dataset.size - 1):
-            x = chainer.Variable(xp.asarray(dataset[i: i + 1]), volatile='on')
-            t = chainer.Variable(xp.asarray(dataset[i + 1: i + 2]), volatile='on')
+            with chainer.using_config('volatile', 'on'):
+                x = chainer.Variable(xp.asarray(dataset[i: i + 1]))
+                t = chainer.Variable(xp.asarray(dataset[i + 1: i + 2]))
             loss = evaluator(x, t)
             
             if self.arpaLM and text:
@@ -413,8 +414,9 @@ class LSTMLM:
         for dataset in self.load_nbest_data(filename):
             sum_log_perp = 0
             for i in six.moves.range(dataset.size - 1):
-                x = chainer.Variable(xp.asarray(dataset[i:i + 1]), volatile='on')
-                t = chainer.Variable(xp.asarray(dataset[i + 1:i + 2]), volatile='on')
+                with chainer.using_config('volatile', 'on'):
+                    x = chainer.Variable(xp.asarray(dataset[i:i + 1]))
+                    t = chainer.Variable(xp.asarray(dataset[i + 1:i + 2]))
                 loss = evaluator(x, t)
                 sum_log_perp += loss.data
             evaluator.predictor.reset_state()
@@ -707,8 +709,9 @@ class LSTMLM_FV(LSTMLM):
         for i in six.moves.range(dataset.size - 1):
             cache = dataset_text[max(0, i - self.cache_len): i + 1]
             dx = self.make_fv(dataset_text[i], cache)
-            x = chainer.Variable(xp.asarray([dx]), volatile="on")
-            t = chainer.Variable(xp.asarray(dataset[i + 1: i + 2]), volatile='on')
+            with chainer.using_config('volatile', 'on'):
+                x = chainer.Variable(xp.asarray([dx]))
+                t = chainer.Variable(xp.asarray(dataset[i + 1: i + 2]))
             loss = evaluator(x, t)
             sum_log_perp += loss.data
         return math.exp(float(sum_log_perp) / (dataset.size - 1))
@@ -764,8 +767,9 @@ class LSTMLM_FV(LSTMLM):
             for i in six.moves.range(dataset.size - 1):
                 cache = dataset_text[max(0, i - self.cache_len): i + 1]
                 dx = self.make_fv(dataset_text[i], cache)
-                x = chainer.Variable(xp.asarray([dx]), volatile="on")
-                t = chainer.Variable(xp.asarray(dataset[i + 1: i + 2]), volatile='on')
+                with chainer.using_config('volatile', 'on'):
+                    x = chainer.Variable(xp.asarray([dx]))
+                    t = chainer.Variable(xp.asarray(dataset[i + 1: i + 2]))
                 loss = evaluator(x, t)
                 sum_log_perp += loss.data
             evaluator.predictor.reset_state()
