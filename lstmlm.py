@@ -40,7 +40,6 @@ import math
 import sys
 import time
 import tarfile
-import _pickle as cPickle
 import numpy as np
 import six
 import os
@@ -54,6 +53,7 @@ import chainer.functions as F
 from chainer import optimizers
 from chainer import serializers
 from chainer.functions.evaluation import accuracy
+from six.moves import cPickle
 
 # local imports
 import net
