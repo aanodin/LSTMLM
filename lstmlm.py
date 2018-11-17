@@ -40,7 +40,7 @@ import math
 import sys
 import time
 import tarfile
-import cPickle
+import _pickle as cPickle
 import numpy as np
 import six
 import os
