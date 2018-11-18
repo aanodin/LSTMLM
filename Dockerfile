@@ -1,4 +1,4 @@
-FROM python:3.5
+FROM nvidia/cuda:9.2-base
 
 ADD . /app
 WORKDIR /app
