@@ -60,7 +60,8 @@ import net
 import ArpaLM
 
 try:
-    from gensim_rm_online import gensim as gensim2
+    #from gensim_rm_online import gensim as gensim2
+    pass
 except ImportError:
     raise ImportError("For word2vec online methods you need modified"
                       " gensim package. Please, install rm_online branch from "
@@ -936,7 +937,7 @@ if __name__ == "__main__":
     else:
         xp = np
     
-    xp.random.seed(args.random_seed)
+    #xp.random.seed(args.random_seed)
     
     # if no args are passed
     if len(sys.argv) == 1:
