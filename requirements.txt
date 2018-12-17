@@ -1,4 +1,4 @@
 chainer
-cupy-cuda92
+cupy-cuda90
 numpy
 argparse
