@@ -1,4 +1,3 @@
 chainer
-cupy-cuda100
 numpy
 argparse
