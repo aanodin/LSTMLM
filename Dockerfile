@@ -1,4 +1,4 @@
-FROM nvidia/cuda:10.0-base
+FROM nvidia/cuda:10.0-devel
 
 ADD . /app
 WORKDIR /app
